@@ -24,16 +24,11 @@ class IsSupportEmployeeOrReadOnly(permissions.BasePermission):
     message = "Only a sale/support employee assigned to the client or a manager can make changes"
 
     def has_permission(self, request, view):
-        contracts = Contract.objects.all()
-        sales_contacts = [contract.sales_contact for contract in contracts]
         if request.method == 'POST' and request.user.department == 'support':
-            return False
-        if request.method == 'POST' and request.user not in sales_contacts:
             return False
         return True
 
     def has_object_permission(self, request, view, obj):
-
         if request.method in permissions.SAFE_METHODS:
             return True
 
