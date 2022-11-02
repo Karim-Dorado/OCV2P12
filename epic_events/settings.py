@@ -25,10 +25,10 @@ environ.Env.read_env()
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qz7t^-1!ntut-e=61f-^q1=ib41n65a5mx1!s+jybyof4$8wb-'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'epic_events.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'epic_event_db',
-        'USER': "postgres",
-        'PASSWORD': "admin",
-        'HOST': "127.0.0.1",
-        'PORT': "8000",
+        'NAME': env('NAME'),
+        'USER': env('USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT'),
     }
 }
 
