@@ -15,18 +15,16 @@ class EmployeeSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'department',
-            'password', 
+            'password',
             ]
-    
-    def create(self, validated_data):
-        user = Employee.objects.create(
-            username = validated_data["username"],
-            email=validated_data["email"],
-            first_name=validated_data["first_name"],
-            last_name=validated_data["last_name"],
-            department = validated_data["department"]
-        )
 
+    def create(self, validated_data):
+        user = Employee.objects.create(username=validated_data["username"],
+                                       email=validated_data["email"],
+                                       first_name=validated_data["first_name"],
+                                       last_name=validated_data["last_name"],
+                                       department=validated_data["department"]
+                                       )
         user.set_password(validated_data["password"])
         user.save()
         return user

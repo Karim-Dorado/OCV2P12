@@ -30,16 +30,16 @@ class Employee(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=250, unique=True, default='email@email.com')
     first_name = models.CharField(max_length=100, blank=False, default='first_name')
     last_name = models.CharField(max_length=100, blank=False, default='last_name')
-    password =  models.CharField(max_length=100, blank=False, default='password')
+    password = models.CharField(max_length=100, blank=False, default='password')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    department = models.CharField(max_length=10,choices=ROLE)
+    department = models.CharField(max_length=10, choices=ROLE)
 
     objects = EmployeeManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ['email','first_name','last_name']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
     def __str__(self):
         return self.username

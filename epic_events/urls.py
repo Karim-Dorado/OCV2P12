@@ -22,8 +22,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from api.views import (
-    ClientViewSet, 
-    ContractViewSet, 
+    ClientViewSet,
+    ContractViewSet,
     EventViewSet,
 )
 from core.views import EmployeeViewSet

@@ -14,7 +14,7 @@ class IsSaleEmployeeOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        return (obj.sales_contact == request.user 
+        return (obj.sales_contact == request.user
                 or request.user.department == 'management'
                 )
 
@@ -31,7 +31,7 @@ class IsSupportEmployeeOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        return (obj.support_contact == request.user 
-                or obj.contract.client.sales_contact == request.user 
+        return (obj.support_contact == request.user
+                or obj.contract.client.sales_contact == request.user
                 or request.user.department == 'management'
                 )
