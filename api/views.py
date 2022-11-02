@@ -19,7 +19,6 @@ class ClientViewSet(viewsets.ModelViewSet):
                         'phone',
                         'mobile',
                         'company_name',
-                        'sales_contact',
                         'created_at',
                         'updated_at',
                         'date_revokated']

@@ -7,10 +7,6 @@ class ClientSerializer(serializers.ModelSerializer):
     """
     ModelSerializer that serializes Client instances.
     """
-    sales_contact = serializers.SlugRelatedField(
-        queryset=Employee.objects.filter(department = 'sales'),
-        slug_field='username',
-    )
 
     class Meta:
         model = Client
@@ -21,15 +17,9 @@ class ClientSerializer(serializers.ModelSerializer):
                   'phone',
                   'mobile',
                   'company_name',
-                  'sales_contact',
                   'created_at',
                   'updated_at',
                   'date_revokated']
-
-    def create(self, validated_data):
-        validated_data['sales_contact'] = self.context.get("request", None).user
-        self.fields['sales_contact'].readonly = True
-        return super().create(validated_data)
 
 
 class ContractSerializer(serializers.ModelSerializer):
