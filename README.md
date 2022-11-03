@@ -43,3 +43,4 @@ L'API doit respecter les directives suivantes :
    ```python manage.py createsuperuser```
 2. Lancer l'application en entrant la commande :
    ```python manage.py runserver```
+3. Pour utiliser les endpoints de l'API, se référer à la [documentation Postman](https://documenter.getpostman.com/view/19435466/2s8YY9w78t)
