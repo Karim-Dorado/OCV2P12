@@ -22,8 +22,10 @@ L'API doit respecter les directives suivantes :
    ``` git clone https://github.com/Karim-Dorado/V2P10.git ```
 4. Créer et activer un environnement virtuel :
    ```python3 -m venv env```
+   
    Sous macOS ou Linux :
    ```env/bin/activate```
+   
    Sous Windows :
    ```env\Scripts\activate.bat```
 5. Installer les dépendances :
