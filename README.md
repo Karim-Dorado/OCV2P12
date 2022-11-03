@@ -18,4 +18,4 @@ L'API doit respecter les directives suivantes :
 ### Installation
 1. Installer Python 3
 2. Cloner le repository :
-    git clone https://github.com/Karim-Dorado/V2P10.git
+    / git clone https://github.com/Karim-Dorado/V2P10.git
