@@ -17,5 +17,27 @@ L'API doit respecter les directives suivantes :
 
 ### Installation
 1. Installer Python 3
-2. Cloner le repository :
-    ``` git clone https://github.com/Karim-Dorado/V2P10.git ```
+2. Installer et créer une base de données POSTGRESQL
+3. Cloner le repository :
+   ``` git clone https://github.com/Karim-Dorado/V2P10.git ```
+4. Créer et activer un environnement virtuel :
+   ```python3 -m venv env```
+   Sous macOS ou Linux :
+   ```env/bin/activate```
+   Sous Windows :
+   ```env\Scripts\activate.bat```
+5. Installer les dépendances :
+   ```pip install -r requirements.txt```
+6. Créer un fichier .env à la racine du dossier epic_events et créer les variables d'environnement suivantes :
+   - SECRET_KEY
+   - DEBUG
+   - NAME
+   - USER
+   - PASSWORD
+   - HOST
+
+### Lancer l'application
+1. Créer dans un premier temps un utilisateur administrateur :
+   ```python manage.py createsuperuser```
+2. Lancer l'application en entrant la commande :
+   ```python manage.py runserver```
