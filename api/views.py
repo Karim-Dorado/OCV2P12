@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from .models import Client, Contract, Event
 from .serializers import ClientSerializer, ContractSerializer, EventSerializer
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsSaleEmployeeOrReadOnly, IsSupportEmployeeOrReadOnly
+from .permissions import IsSaleContactOrReadOnly, IsSaleEmployeeOrReadOnly, IsSupportEmployeeOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -26,7 +26,7 @@ class ClientViewSet(viewsets.ModelViewSet):
 
 class ContractViewSet(viewsets.ModelViewSet):
     serializer_class = ContractSerializer
-    permission_classes = [IsAuthenticated, IsSaleEmployeeOrReadOnly]
+    permission_classes = [IsAuthenticated, IsSaleContactOrReadOnly]
     filter_backends = [DjangoFilterBackend]
 
     filterset_fields = ['id',
