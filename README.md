@@ -12,8 +12,8 @@ L'API doit respecter les directives suivantes :
 - Mise en place d'un système de filtres de recherche sur tous les endpoints de l'API.
 - Utiliser une base de données PostgreSQL.
 - Les membres de l'équipe de vente doivent pouvoir effectuer des opérations CRUD sur les clients et les contrats qui leurs sont attribués.
-- Les membres de l'équipe de support ont un accès en lecture seule à tous les clients, contrats ou événements ainsi q'un droit de modification/d'accès pour tous les événements dont ils sont responsables.
-- Les membres de l'éuipe de gestion ont un droit de modification/d'accès à tous les clients contrats et événements.
+- Les membres de l'équipe de support ont un accès en lecture seule à tous les clients, contrats ou événements ainsi qu'un droit de modification/d'accès pour tous les événements dont ils sont responsables.
+- Les membres de l'équipe de gestion ont un droit de modification/d'accès à tous les clients, contrats et événements.
 
 ### Installation
 1. Installer Python 3
