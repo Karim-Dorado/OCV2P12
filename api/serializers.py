@@ -24,7 +24,7 @@ class ClientSerializer(serializers.ModelSerializer):
                   'created_at',
                   'updated_at',
                   'date_revokated']
-    
+
     def create(self, validated_data):
         sales_contact = self.context.get("request", None).user
 
@@ -61,8 +61,10 @@ class ContractSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         client = Client.objects.get(pk=self.context.get("view").kwargs["client_pk"])
-        if client.is_prospect == True:
-            raise serializers.ValidationError("You can't create a contract to a client who is still a prospect")
+        if client.is_prospect:
+            raise serializers.ValidationError(
+                "You can't create a contract to a client who is still a prospect"
+                )
         else:
             contract = Contract.objects.create(
                 client=client,
@@ -102,8 +104,10 @@ class EventSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         contract = Contract.objects.get(pk=self.context.get("view").kwargs["contract_pk"])
-        if contract.status == False:
-            raise serializers.ValidationError("You can't create an event while a contract is still not signed")
+        if not contract.status:
+            raise serializers.ValidationError(
+                "You can't create an event while a contract is still not signed"
+                )
         else:
             event = Event.objects.create(
                 name=validated_data["name"],

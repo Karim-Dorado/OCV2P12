@@ -2,7 +2,10 @@ from rest_framework import viewsets
 from .models import Client, Contract, Event
 from .serializers import ClientSerializer, ContractSerializer, EventSerializer
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsSalesContactOrReadOnly, IsContractSalesContactOrReadOnly, IsSupportContactOrReadOnly
+from .permissions import (
+                          IsSalesContactOrReadOnly,
+                          IsContractSalesContactOrReadOnly,
+                          IsSupportContactOrReadOnly)
 from django_filters.rest_framework import DjangoFilterBackend
 
 
