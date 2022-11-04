@@ -1,12 +1,18 @@
 from rest_framework import serializers
 from api.models import Client, Contract, Event
 from core.models import Employee
+from core.serializers import EmployeeSerializer
 
 
 class ClientSerializer(serializers.ModelSerializer):
     """
     ModelSerializer that serializes Client instances.
     """
+    #sales_contact = serializers.SlugRelatedField(
+    #    queryset=Employee.objects.filter(department='sales'),
+    #    slug_field='username',
+    #)
+    sales_contact = EmployeeSerializer(read_only=True)
 
     class Meta:
         model = Client
@@ -17,25 +23,40 @@ class ClientSerializer(serializers.ModelSerializer):
                   'phone',
                   'mobile',
                   'company_name',
+                  'sales_contact',
+                  'is_prospect',
                   'created_at',
                   'updated_at',
                   'date_revokated']
+    
+    def create(self, validated_data):
+        sales_contact = self.context.get("request", None).user
+
+        client = Client.objects.create(
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
+            email=validated_data['email'],
+            phone=validated_data['phone'],
+            mobile=validated_data['mobile'],
+            company_name=validated_data['company_name'],
+            sales_contact=sales_contact,
+            is_prospect=validated_data['is_prospect'],
+            date_revokated=validated_data['date_revokated'],
+        )
+        client.save()
+        return client
 
 
 class ContractSerializer(serializers.ModelSerializer):
     """
     ModelSerializer that serializes Contract instances.
     """
-    sales_contact = serializers.SlugRelatedField(
-        queryset=Employee.objects.filter(department='sales'),
-        slug_field='username',
-    )
+    client = ClientSerializer(read_only=True)
 
     class Meta:
         model = Contract
         fields = ['id',
                   'client',
-                  'sales_contact',
                   'date_signed',
                   'status',
                   'amount',
@@ -43,12 +64,9 @@ class ContractSerializer(serializers.ModelSerializer):
                   'date_revokated']
 
     def create(self, validated_data):
-        sales_contact = self.context.get("request", None).user
         client = Client.objects.get(pk=self.context.get("view").kwargs["client_pk"])
-
         contract = Contract.objects.create(
             client=client,
-            sales_contact=sales_contact,
             date_signed=validated_data["date_signed"],
             status=validated_data["status"],
             amount=validated_data["amount"],
@@ -63,6 +81,7 @@ class EventSerializer(serializers.ModelSerializer):
     """
     ModelSerializer that serializes Event instances.
     """
+    contract = ContractSerializer(read_only=True)
     support_contact = serializers.SlugRelatedField(
         queryset=Employee.objects.filter(department='support'),
         slug_field='username',
