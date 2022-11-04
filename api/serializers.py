@@ -8,10 +8,6 @@ class ClientSerializer(serializers.ModelSerializer):
     """
     ModelSerializer that serializes Client instances.
     """
-    #sales_contact = serializers.SlugRelatedField(
-    #    queryset=Employee.objects.filter(department='sales'),
-    #    slug_field='username',
-    #)
     sales_contact = EmployeeSerializer(read_only=True)
 
     class Meta:
@@ -65,16 +61,19 @@ class ContractSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         client = Client.objects.get(pk=self.context.get("view").kwargs["client_pk"])
-        contract = Contract.objects.create(
-            client=client,
-            date_signed=validated_data["date_signed"],
-            status=validated_data["status"],
-            amount=validated_data["amount"],
-            payement_due=validated_data["payement_due"],
-            date_revokated=validated_data['date_revokated'],
-        )
-        contract.save()
-        return contract
+        if client.is_prospect == True:
+            raise serializers.ValidationError("You can't create a contract to a client who is still a prospect")
+        else:
+            contract = Contract.objects.create(
+                client=client,
+                date_signed=validated_data["date_signed"],
+                status=validated_data["status"],
+                amount=validated_data["amount"],
+                payement_due=validated_data["payement_due"],
+                date_revokated=validated_data['date_revokated'],
+                )
+            contract.save()
+            return contract
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -102,18 +101,19 @@ class EventSerializer(serializers.ModelSerializer):
                   'date_revokated']
 
     def create(self, validated_data):
-
         contract = Contract.objects.get(pk=self.context.get("view").kwargs["contract_pk"])
-
-        event = Event.objects.create(
-            name=validated_data["name"],
-            contract=contract,
-            support_contact=validated_data["support_contact"],
-            attendees=validated_data["attendees"],
-            start_date=validated_data["start_date"],
-            end_date=validated_data["end_date"],
-            notes=validated_data['notes'],
-            date_revokated=validated_data['date_revokated'],
-        )
-        event.save()
-        return event
+        if contract.status == False:
+            raise serializers.ValidationError("You can't create an event while a contract is still not signed")
+        else:
+            event = Event.objects.create(
+                name=validated_data["name"],
+                contract=contract,
+                support_contact=validated_data["support_contact"],
+                attendees=validated_data["attendees"],
+                start_date=validated_data["start_date"],
+                end_date=validated_data["end_date"],
+                notes=validated_data['notes'],
+                date_revokated=validated_data['date_revokated'],
+            )
+            event.save()
+            return event
