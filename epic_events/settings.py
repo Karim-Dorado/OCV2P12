@@ -191,7 +191,7 @@ LOGGING = {
     'handlers': {
         'file': {
             'level': 'WARNING',
-            'class' : 'logging.FileHandler',
+            'class': 'logging.FileHandler',
             'filename': 'logs/epic_events.log',
             'formatter': 'simple',
         }
@@ -199,7 +199,7 @@ LOGGING = {
     'formatters': {
         'simple': {
             'format': '{asctime} {levelname} {module} {process:d} {message}',
-            'datefmt' : "%d/%b/%Y %H:%M:%S",
+            'datefmt': "%d/%b/%Y %H:%M:%S",
             'style': '{'
         }
     }
