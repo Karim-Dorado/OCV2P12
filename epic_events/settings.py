@@ -179,3 +179,28 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=30),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+LOGGING = {
+    'version': 1,
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG'
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class' : 'logging.FileHandler',
+            'filename': 'logs/epic_events.log',
+            'formatter': 'simple',
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '{asctime} {levelname} {module} {process:d} {message}',
+            'datefmt' : "%d/%b/%Y %H:%M:%S",
+            'style': '{'
+        }
+    }
+}
