@@ -1,4 +1,7 @@
 from rest_framework import permissions
+from datetime import datetime
+
+today = datetime.today()
 
 
 class IsSalesContactOrReadOnly(permissions.BasePermission):
@@ -46,6 +49,21 @@ class IsSupportContactOrReadOnly(permissions.BasePermission):
         return True
 
     def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return (obj.support_contact == request.user
+                or obj.contract.client.sales_contact == request.user
+                or request.user.department == 'management'
+                )
+
+
+class IsEventCommmingOrReadOnly(permissions.BasePermission):
+    message = "You can't modify an event already finished"
+
+    def has_object_permission(self, request, view, obj):
+        if str(obj.end_date) < str(today):
+            return False
         if request.method in permissions.SAFE_METHODS:
             return True
 

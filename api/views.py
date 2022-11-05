@@ -5,7 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from .permissions import (
                           IsSalesContactOrReadOnly,
                           IsContractSalesContactOrReadOnly,
-                          IsSupportContactOrReadOnly)
+                          IsSupportContactOrReadOnly,
+                          IsEventCommmingOrReadOnly)
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -35,7 +36,7 @@ class ContractViewSet(viewsets.ModelViewSet):
 
 class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
-    permission_classes = [IsAuthenticated, IsSupportContactOrReadOnly]
+    permission_classes = [IsAuthenticated, IsSupportContactOrReadOnly, IsEventCommmingOrReadOnly]
     filter_backends = [DjangoFilterBackend]
 
     filterset_fields = ['name',
